@@ -19,11 +19,18 @@
     <string name="incall_screen_settings">In-call screen settings</string>
     <string name="show_ssn_label">Event notification</string>
     <string name="show_ssn_summary">Show a notification for various network events related to call handling</string>
+    <string name="incall_echo_cancellation">In-call noise reduction</string>
+    <string name="enable_aec_label">Echo cancellation</string>
+    <string name="enable_aec_summary">Reduce ambient noise for the remote party during voice calls</string>
 
     <!-- Blacklist preferences -->
     <string name="blacklist_title">Blocked caller list</string>
     <string name="blacklist_summary_disabled">Disabled</string>
     <string name="blacklist_summary">You will not receive incoming calls or messages from phone numbers on the blocked caller list</string>
+
+    <!-- Sprint MWI Quirk: Phantom message wait indicator workaround -->
+    <string name="mwi_notification_title">Message wait indicator</string>
+    <string name="mwi_notification_summary">Show message wait indicator voicemail notifications</string>
 
     <!-- My Phone Number -->
     <string name="phone_number_label">My phone number</string>
@@ -217,5 +224,9 @@
     <string name="exportAllcontatsFailed">Failed to export all contacts to SIM</string>
     <string name="exportAllcontatsNoContacts">No contacts found to export to SIM</string>
 
-    <string name="msim_mobile_network_settings_title">SIM %d mobile network settings</string>
+    <string name="msim_mobile_network_settings_title">SIM %d cellular network settings</string>
+
+    <!-- Permission to modify network mode via intent -->
+    <string name="perm_change_mobile_network">change network mode</string>
+    <string name="perm_change_mobile_network_desc">Allows an app to modify the current network mode.</string>
 </resources>

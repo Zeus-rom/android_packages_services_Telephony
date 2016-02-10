@@ -147,6 +147,13 @@
     <!-- DEPRECATED: Use CarrierConfigManager#KEY_SHOW_CDMA_CHOICES_BOOL -->
     <bool name="config_show_cdma" translatable="false">false</bool>
 
+    <!-- Sprint Message Wait Indicator Quirk
+         If true, message wait indicators are hidden by default on this device
+         unless the user enables it in Call Settings.  This quirk is necessary
+         for the "Phantom Voicemail" issue where notifications are impossible
+         to dismiss on the Sprint network. -->
+    <bool name="sprint_mwi_quirk">false</bool>
+
     <!-- Package name for the default in-call UI and dialer [DO NOT TRANSLATE] -->
     <string name="ui_default_package" translatable="false">com.android.dialer</string>
 
@@ -200,4 +207,13 @@
 
     <!-- Config to enabled reading and displaying of EF_PLMN_SEL SIM file -->
     <bool name="config_ef_plmn_sel">false</bool>
+
+    <!-- For this option to exist and work, the parameter name must be defined -->
+    <string name="incall_echo_cancellation_parameter"></string>
+
+    <!-- Paired with the above parameter, the below values will be used as enable/disable values for audiomanager.
+         "incall_echo_cancellation_parameter=incall_echo_cancellation_value" will be sent directly down into the
+         HAL. Size of this array must be exactly 2. -->
+    <string-array name="incall_echo_cancellation_values">
+    </string-array>
 </resources>
