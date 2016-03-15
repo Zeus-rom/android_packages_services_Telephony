@@ -113,12 +113,15 @@ public class CallFeaturesSetting extends PreferenceActivity
     private static final String PHONE_ACCOUNT_SETTINGS_KEY =
             "phone_account_settings_preference_screen";
 
+    private static final String USE_INTRUSIVE_CALL_KEY = "use_intrusive_call";
+
     private static final String ENABLE_VIDEO_CALLING_KEY = "button_enable_video_calling";
 
 
     private static final String BUTTON_PROXIMITY_KEY   = "button_proximity_key";
 
     private static final String FLIP_ACTION_KEY = "flip_action";
+    private static final String CALL_SCREEN_WAKEUP_KEY = "call_screen_wakeup";
 
     private Phone mPhone;
     private SubscriptionInfoHelper mSubscriptionInfoHelper;
@@ -137,6 +140,8 @@ public class CallFeaturesSetting extends PreferenceActivity
     private SwitchPreference mProxSpeaker;
     private SlimSeekBarPreference mProxSpeakerDelay;
     private SwitchPreference mProxSpeakerIncallOnly;
+    private SwitchPreference mUseIntrusiveCall;
+    private SwitchPreference mCallScreenWakeup;
 
     /*
      * Click Listeners, handle click based on objects attached to UI.
@@ -214,6 +219,19 @@ public class CallFeaturesSetting extends PreferenceActivity
             Settings.System.putInt(getContentResolver(),
                 Settings.System.CALL_FLIP_ACTION_KEY, index);
             updateFlipActionSummary(index);
+        } else if (preference == mUseIntrusiveCall) {
+            final boolean val = (Boolean) objValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.USE_INTRUSIVE_CALL, val ? 1 : 0);
+        } else if (preference == mCallScreenWakeup) {
+            Settings.System.putInt(getContentResolver(),
+                Settings.System.WAKEUP_SCREEN_WHEN_CALL_DISCONNECTED,
+             ((boolean) objValue) ? 1 : 0);
+            if (objValue.toString().equals("true")) {
+                mCallScreenWakeup.setSummary(getString(R.string.screen_wakeup_enabled_summary));
+            } else if (objValue.toString().equals("false")) {
+                mCallScreenWakeup.setSummary(getString(R.string.screen_wakeup_disabled_summary));
+            }
         }
 
         // Always let the preference setting proceed.
@@ -289,6 +307,17 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         mFlipAction = (ListPreference) findPreference(FLIP_ACTION_KEY);
 
+        mCallScreenWakeup = (SwitchPreference) findPreference(CALL_SCREEN_WAKEUP_KEY);
+        boolean wakeup = Settings.System.getInt(getContentResolver(),
+                Settings.System.WAKEUP_SCREEN_WHEN_CALL_DISCONNECTED, 1) == 1;
+        if (wakeup) {
+            mCallScreenWakeup.setSummary(getString(R.string.screen_wakeup_enabled_summary));
+        } else {
+            mCallScreenWakeup.setSummary(getString(R.string.screen_wakeup_disabled_summary));
+        }
+        mCallScreenWakeup.setChecked(wakeup);
+        mCallScreenWakeup.setOnPreferenceChangeListener(this);
+
         mProxSpeaker = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER);
         mProxSpeakerIncallOnly = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
         mProxSpeakerDelay = (SlimSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
@@ -299,6 +328,13 @@ public class CallFeaturesSetting extends PreferenceActivity
             mProxSpeakerDelay.minimumValue(100);
             mProxSpeakerDelay.multiplyValue(100);
             mProxSpeakerDelay.setOnPreferenceChangeListener(this);
+        }
+
+        mUseIntrusiveCall = (SwitchPreference) findPreference(USE_INTRUSIVE_CALL_KEY);
+        if (mUseIntrusiveCall != null) {
+            mUseIntrusiveCall.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.USE_INTRUSIVE_CALL, 0) != 0);
+            mUseIntrusiveCall.setOnPreferenceChangeListener(this);
         }
 
         PersistableBundle carrierConfig =

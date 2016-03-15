@@ -27,6 +27,7 @@
     <protected-broadcast android:name="android.intent.action.SERVICE_STATE" />
     <protected-broadcast android:name="android.intent.action.RADIO_TECHNOLOGY" />
     <protected-broadcast android:name="android.intent.action.EMERGENCY_CALLBACK_MODE_CHANGED" />
+    <protected-broadcast android:name="android.intent.action.EMERGENCY_CALL_STATE_CHANGED" />
     <protected-broadcast android:name="android.intent.action.SIG_STR" />
     <protected-broadcast android:name="android.intent.action.ANY_DATA_STATE" />
     <protected-broadcast android:name="android.intent.action.DATA_CONNECTION_FAILED" />
@@ -127,6 +128,7 @@
     <uses-permission android:name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST" />
     <uses-permission android:name="cyanogenmod.permission.HARDWARE_ABSTRACTION_ACCESS" />
     <uses-permission android:name="com.android.phone.CHANGE_NETWORK_MODE" />
+    <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
 
     <!-- This tells the activity manager to not delay any of our activity
          start requests, even if they happen immediately after the user
